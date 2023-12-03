@@ -35,14 +35,14 @@ namespace RideShare
                         TripHour = txtTripHour.Text,
                         Description = txtDescription.Text,
                         Seats = Convert.ToInt32(txtSeatCount.Text),
-                        UserID = userId // UserID'yi TripPlans nesnesine ekleyin
+                        UserID = userId 
                     };
 
                     db.TripPlans.Add(tripPlan);
                     db.SaveChanges();
 
                     // Plan oluşturulduktan sonra başka bir sayfaya yönlendirme yapabilirsiniz
-                    Response.Redirect("MyTrips.aspx"); // Örneğin MyTrips sayfasına
+                    Response.Redirect("MyTrips.aspx"); 
                 }
             }
             else

@@ -30,7 +30,7 @@ namespace RideShare
                     Session["UserID"] = user.UserID;
                     //userId = user.UserID;
                     // Giriş başarılı, kullanıcıyı ana sayfaya yönlendir
-                    Response.Redirect("Default.aspx"); // Ana sayfanızın adını buraya girin
+                    Response.Redirect("Default.aspx"); 
                 }
                 else
                 {
