@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RideShareModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'RideShare.dbo.TripPlans' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TripPlans">
+          <Key>
+            <PropertyRef Name="WhereFrom" />
+            <PropertyRef Name="WhereTo" />
+            <PropertyRef Name="Seats" />
+            <PropertyRef Name="TripDate" />
+            <PropertyRef Name="TripHour" />
+          </Key>
+          <Property Name="PlanID" Type="int" />
+          <Property Name="WhereFrom" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="WhereTo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
+          <Property Name="Seats" Type="int" Nullable="false" />
+          <Property Name="TripDate" Type="datetime" Nullable="false" />
+          <Property Name="TripHour" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__TripPlans__UserI__44FF419A">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="TripPlans" Type="Self.TripPlans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="TripPlans">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RideShareModelStoreContainer">
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TripPlans" EntityType="Self.TripPlans" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TripPlans].[PlanID] AS [PlanID], 
+    [TripPlans].[WhereFrom] AS [WhereFrom], 
+    [TripPlans].[WhereTo] AS [WhereTo], 
+    [TripPlans].[Description] AS [Description], 
+    [TripPlans].[Seats] AS [Seats], 
+    [TripPlans].[TripDate] AS [TripDate], 
+    [TripPlans].[TripHour] AS [TripHour], 
+    [TripPlans].[UserID] AS [UserID]
+    FROM [dbo].[TripPlans] AS [TripPlans]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__TripPlans__UserI__44FF419A" Association="Self.FK__TripPlans__UserI__44FF419A">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TripPlans" EntitySet="TripPlans" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RideShareModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TripPlans" Relationship="Self.FK__TripPlans__UserI__44FF419A" FromRole="Users" ToRole="TripPlans" />
+        </EntityType>
+        <EntityType Name="TripPlans">
+          <Key>
+            <PropertyRef Name="WhereFrom" />
+            <PropertyRef Name="WhereTo" />
+            <PropertyRef Name="Seats" />
+            <PropertyRef Name="TripDate" />
+            <PropertyRef Name="TripHour" />
+          </Key>
+          <Property Name="PlanID" Type="Int32" />
+          <Property Name="WhereFrom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="WhereTo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Seats" Type="Int32" Nullable="false" />
+          <Property Name="TripDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TripHour" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserID" Type="Int32" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__TripPlans__UserI__44FF419A" FromRole="TripPlans" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK__TripPlans__UserI__44FF419A">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="TripPlans" Type="Self.TripPlans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="TripPlans">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RideShareEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="TripPlans" EntityType="Self.TripPlans" />
+          <AssociationSet Name="FK__TripPlans__UserI__44FF419A" Association="Self.FK__TripPlans__UserI__44FF419A">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TripPlans" EntitySet="TripPlans" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RideShareModelStoreContainer" CdmEntityContainer="RideShareEntities1">
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="RideShareModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TripPlans">
+            <EntityTypeMapping TypeName="RideShareModel.TripPlans">
+              <MappingFragment StoreEntitySet="TripPlans">
+                <ScalarProperty Name="PlanID" ColumnName="PlanID" />
+                <ScalarProperty Name="WhereFrom" ColumnName="WhereFrom" />
+                <ScalarProperty Name="WhereTo" ColumnName="WhereTo" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Seats" ColumnName="Seats" />
+                <ScalarProperty Name="TripDate" ColumnName="TripDate" />
+                <ScalarProperty Name="TripHour" ColumnName="TripHour" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
